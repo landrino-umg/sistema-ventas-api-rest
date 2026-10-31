@@ -1,32 +1,30 @@
-package gt.edu.umg.sistema.api.handler;
+package gt.edu.umg.sistema.api.controller;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import gt.edu.umg.sistema.api.config.DatabaseConfig;
 import gt.edu.umg.sistema.api.model.ApiResponse;
-import java.io.IOException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class StatusHandler implements HttpHandler {
+@RestController
+@RequestMapping("/api/status")
+@CrossOrigin(origins = "*")
+public class StatusController {
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException {
-        if (CorsHelper.esOptions(exchange)) {
-            return;
-        }
-
-        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
-            CorsHelper.enviarJson(exchange, 405, ApiResponse.error("Método no permitido. Use GET."));
-            return;
-        }
-
+    @GetMapping
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStatus() {
         boolean dbOk = DatabaseConfig.checkConnection();
 
         Map<String, Object> statusData = new LinkedHashMap<>();
-        statusData.put("servicio", "Sistema de Ventas - API REST");
+        statusData.put("servicio", "Sistema de Ventas - API REST (Spring Boot)");
         statusData.put("version", "1.0.0");
         statusData.put("estado", "OPERACIONAL");
         statusData.put("timestamp", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -44,7 +42,7 @@ public class StatusHandler implements HttpHandler {
         endpoints.put("DELETE /api/pedidos/{id}", "Elimina una orden de venta");
         statusData.put("endpointsDisponibles", endpoints);
 
-        int code = dbOk ? 200 : 503;
-        CorsHelper.enviarJson(exchange, code, ApiResponse.ok(dbOk ? "API REST lista y conectada a MySQL" : "Error de conexión a MySQL", statusData));
+        HttpStatus status = dbOk ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE;
+        return ResponseEntity.status(status).body(ApiResponse.ok(dbOk ? "API REST lista y conectada a MySQL" : "Error de conexión a MySQL", statusData));
     }
 }

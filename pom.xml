@@ -4,21 +4,32 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/>
+    </parent>
+
     <groupId>gt.edu.umg.sistema</groupId>
     <artifactId>sistema-ventas-api-rest</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Sistema de Ventas - API REST</name>
-    <description>Servicio API REST para la gestión de órdenes de venta e integración con Android</description>
+    <name>Sistema de Ventas - API REST (Spring Boot)</name>
+    <description>Servicio API REST en Spring Boot para la integración con Android</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>17</maven.compiler.release>
-        <exec.mainClass>gt.edu.umg.sistema.api.ApiServer</exec.mainClass>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
+        <!-- Spring Boot Starter Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!-- Conector MySQL -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -26,59 +37,18 @@
             <version>9.3.0</version>
         </dependency>
 
-        <!-- Google Gson para serialización/deserialización JSON -->
+        <!-- Google Gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.10.1</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Plugin para compilar -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <release>17</release>
-                </configuration>
-            </plugin>
-
-            <!-- Plugin para empaquetar jar ejecutable con dependencias -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>gt.edu.umg.sistema.api.ApiServer</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Plugin Exec para ejecutar fácilmente la API -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <mainClass>gt.edu.umg.sistema.api.ApiServer</mainClass>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -1,14 +1,13 @@
-# Sistema de Ventas - API REST
+# Sistema de Ventas - API REST (Spring Boot)
 
 Proyecto del curso de Programación II - Universidad Mariano Gálvez de Guatemala.
 
-Servicio backend desarrollado en Java para conectar la base de datos MySQL con la aplicación móvil Android y permitir la gestión de órdenes de compra.
+Servicio backend desarrollado en Java con Spring Boot para conectar la base de datos MySQL con la aplicación móvil Android y permitir la gestión de órdenes de compra.
 
 ## Tecnologías utilizadas
 * Java 17
-* Java HttpServer (`com.sun.net.httpserver`)
+* Spring Boot 3.2.5 (Spring Web / REST Controllers)
 * MySQL Connector/J
-* Gson (Google)
 * Maven
 
 ## Endpoints disponibles
@@ -28,7 +27,7 @@ Hacer doble clic en `iniciar_servidor.bat` en la raíz del proyecto.
 
 ### Opción 2: Con Maven por consola
 ```bash
-mvn compile exec:java
+mvn spring-boot:run
 ```
 
 El servidor iniciará en el puerto 8080 (`http://localhost:8080/api`).
