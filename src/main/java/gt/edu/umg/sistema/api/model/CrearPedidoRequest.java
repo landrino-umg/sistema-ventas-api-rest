@@ -8,6 +8,8 @@ public class CrearPedidoRequest {
     private String direccionEnvio;
     private String telefono;
     private String estado; // Opcional, por defecto "PENDIENTE"
+    private Integer productoId; // Formato simple: producto único
+    private Integer cantidad;   // Formato simple: cantidad
     private List<ItemPedidoRequest> items = new ArrayList<>();
 
     public CrearPedidoRequest() {}
@@ -21,6 +23,9 @@ public class CrearPedidoRequest {
     }
 
     public String getDireccionEnvio() {
+        if (direccionEnvio == null || direccionEnvio.trim().isEmpty()) {
+            return "Ciudad de Guatemala";
+        }
         return direccionEnvio;
     }
 
@@ -29,6 +34,9 @@ public class CrearPedidoRequest {
     }
 
     public String getTelefono() {
+        if (telefono == null || telefono.trim().isEmpty()) {
+            return "N/A";
+        }
         return telefono;
     }
 
@@ -44,7 +52,27 @@ public class CrearPedidoRequest {
         this.estado = estado;
     }
 
+    public Integer getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(Integer productoId) {
+        this.productoId = productoId;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
     public List<ItemPedidoRequest> getItems() {
+        if ((items == null || items.isEmpty()) && productoId != null && cantidad != null) {
+            items = new ArrayList<>();
+            items.add(new ItemPedidoRequest(productoId, cantidad));
+        }
         return items;
     }
 

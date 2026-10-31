@@ -23,11 +23,8 @@ public class PedidoDAO {
         if (req.getNombreCliente() == null || req.getNombreCliente().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre del cliente o comprador es obligatorio.");
         }
-        if (req.getDireccionEnvio() == null || req.getDireccionEnvio().trim().isEmpty()) {
-            throw new IllegalArgumentException("La dirección de entrega es obligatoria.");
-        }
         if (req.getItems() == null || req.getItems().isEmpty()) {
-            throw new IllegalArgumentException("La orden debe incluir al menos un producto.");
+            throw new IllegalArgumentException("La orden debe incluir al menos un producto (indique productoId y cantidad).");
         }
 
         Connection cn = DatabaseConfig.getConnection();
