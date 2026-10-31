@@ -71,6 +71,15 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Plugin Exec para ejecutar fácilmente la API -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <mainClass>gt.edu.umg.sistema.api.ApiServer</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
